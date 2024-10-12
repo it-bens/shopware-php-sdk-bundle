@@ -1,5 +1,14 @@
 # Shopware 6 SDK Bundle for Symfony
 
+![Static Badge](https://img.shields.io/badge/PHP-8.1-8993be)
+![Static Badge](https://img.shields.io/badge/PHP-8.2-8993be)
+![Static Badge](https://img.shields.io/badge/PHP-8.3-8993be)
+![Static Badge](https://img.shields.io/badge/Symfony-6.4-000000)
+![Static Badge](https://img.shields.io/badge/Symfony-7.1-000000)
+![Static Badge](https://img.shields.io/badge/Shopware-6.5-189eff)
+![Packagist Version](https://img.shields.io/packagist/v/it-bens/shopware-sdk-bundle)
+[![codecov](https://codecov.io/gh/it-bens/shopware-php-sdk-bundle/branch/main/graph/badge.svg?token=pbKH9OWz5t)](https://codecov.io/gh/it-bens/shopware-php-sdk-bundle)
+
 This bundle wraps the [Shopware 6 SDK](https://github.com/it-bens/shopware-php-sdk) into a Symfony bundle.
 
 ## Installation
