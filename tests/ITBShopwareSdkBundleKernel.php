@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ITB\ShopwareSdkBundle\Tests;
 
+use ITB\ShopwareSdkBundle\DependencyInjection\Configuration;
 use ITB\ShopwareSdkBundle\DependencyInjection\ITBShopwareSdkExtension;
 use ITB\ShopwareSdkBundle\ITBShopwareSdkBundle;
 use ITB\ShopwareSdkBundle\Tests\Compiler\PsrClockServicesCompilerPass;
@@ -15,10 +16,19 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\HttpKernel\Kernel;
 
+/**
+ * @phpstan-import-type ITBShopwareSdkConfiguration from Configuration
+ */
 class ITBShopwareSdkBundleKernel extends Kernel
 {
+    /**
+     * @var ITBShopwareSdkConfiguration|null
+     */
     private ?array $shopwareSdkConfig;
 
+    /**
+     * @param ITBShopwareSdkConfiguration|null $shopwareSdkConfig
+     */
     public function __construct(string $environment, bool $debug, ?array $shopwareSdkConfig = null)
     {
         parent::__construct($environment, $debug);

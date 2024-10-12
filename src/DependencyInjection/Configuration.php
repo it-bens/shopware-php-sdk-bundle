@@ -9,6 +9,16 @@ use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Vin\ShopwareSdk\Auth\GrantType;
 
+/**
+ * @phpstan-type ClientCredentialsConfiguration array{grant_type: string, client_id: string, client_secret: string}
+ * @phpstan-type UsernamePasswordConfiguration array{grant_type: string, username: string, password: string}
+ * @phpstan-type ITBShopwareSdkConfiguration array{
+ *     shop_url: string,
+ *     shopware_version: string,
+ *     credentials: ClientCredentialsConfiguration|UsernamePasswordConfiguration,
+ *     cache: bool
+ * }
+ */
 final class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder(): TreeBuilder

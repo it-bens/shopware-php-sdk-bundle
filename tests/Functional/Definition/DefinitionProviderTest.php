@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace ITB\ShopwareSdkBundle\Tests\Functional\Definition;
 
+use ITB\ShopwareSdkBundle\DependencyInjection\Configuration;
 use ITB\ShopwareSdkBundle\Tests\Functional\Definition\DefinitionProviderTest\DefinitionProviderTestKernel;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Yaml\Yaml;
 use Vin\ShopwareSdk\Definition\DefinitionProviderInterface;
 
+/**
+ * @phpstan-import-type ITBShopwareSdkConfiguration from Configuration
+ */
 final class DefinitionProviderTest extends TestCase
 {
     public static function provider(): \Generator
@@ -19,6 +23,9 @@ final class DefinitionProviderTest extends TestCase
         yield [$config];
     }
 
+    /**
+     * @param ITBShopwareSdkConfiguration $config
+     */
     #[DataProvider('provider')]
     public function testWithAdditionalDefinitionCollectionPopulator(array $config): void
     {

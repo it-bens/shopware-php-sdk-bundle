@@ -16,6 +16,11 @@ use Vin\ShopwareSdk\Auth\AccessTokenFetcher;
 use Vin\ShopwareSdk\Auth\AccessTokenProvider;
 use Vin\ShopwareSdk\Auth\GrantType;
 
+/**
+ * @phpstan-import-type ITBShopwareSdkConfiguration from Configuration
+ * @phpstan-import-type ClientCredentialsConfiguration from Configuration
+ * @phpstan-import-type UsernamePasswordConfiguration from Configuration
+ */
 final class ITBShopwareSdkExtension extends Extension
 {
     public const ALIAS = 'itb_shopware_sdk';
@@ -32,6 +37,7 @@ final class ITBShopwareSdkExtension extends Extension
 
         /** @var ConfigurationInterface $configuration */
         $configuration = $this->getConfiguration($configs, $container);
+        /** @var ITBShopwareSdkConfiguration $config */
         $config = $this->processConfiguration($configuration, $configs);
 
         $this->configureShopUrl($container, $config);
@@ -40,14 +46,20 @@ final class ITBShopwareSdkExtension extends Extension
         $this->configureAccessTokenProvider($container, $config);
     }
 
+    /**
+     * @param ITBShopwareSdkConfiguration $config
+     */
     private function configureAccessTokenProvider(ContainerBuilder $container, array $config): void
     {
         $grantType = $config['credentials']['grant_type'];
 
         if ($grantType === GrantType::CLIENT_CREDENTIALS) {
+            /** @var ClientCredentialsConfiguration $credentials */
+            $credentials = $config['credentials'];
+
             $accessTokenProviderDefinition = $container->getDefinition(ServiceIds::WITH_CLIENT_CREDENTIALS_ACCESS_TOKEN_PROVIDER);
-            $accessTokenProviderDefinition->setArgument('$clientId', $config['credentials']['client_id']);
-            $accessTokenProviderDefinition->setArgument('$clientSecret', $config['credentials']['client_secret']);
+            $accessTokenProviderDefinition->setArgument('$clientId', $credentials['client_id']);
+            $accessTokenProviderDefinition->setArgument('$clientSecret', $credentials['client_secret']);
 
             $container->removeDefinition(ServiceIds::WITH_USERNAME_AND_PASSWORD_ACCESS_TOKEN_PROVIDER);
             $container->setAlias(AccessTokenProvider::class, ServiceIds::WITH_CLIENT_CREDENTIALS_ACCESS_TOKEN_PROVIDER)->setPublic(true);
@@ -56,9 +68,12 @@ final class ITBShopwareSdkExtension extends Extension
         }
 
         if ($grantType === GrantType::PASSWORD) {
+            /** @var UsernamePasswordConfiguration $credentials */
+            $credentials = $config['credentials'];
+
             $accessTokenProviderDefinition = $container->getDefinition(ServiceIds::WITH_USERNAME_AND_PASSWORD_ACCESS_TOKEN_PROVIDER);
-            $accessTokenProviderDefinition->setArgument('$username', $config['credentials']['username']);
-            $accessTokenProviderDefinition->setArgument('$password', $config['credentials']['password']);
+            $accessTokenProviderDefinition->setArgument('$username', $credentials['username']);
+            $accessTokenProviderDefinition->setArgument('$password', $credentials['password']);
 
             $container->removeDefinition(ServiceIds::WITH_CLIENT_CREDENTIALS_ACCESS_TOKEN_PROVIDER);
             $container->setAlias(AccessTokenProvider::class, ServiceIds::WITH_USERNAME_AND_PASSWORD_ACCESS_TOKEN_PROVIDER)->setPublic(true);
@@ -69,6 +84,9 @@ final class ITBShopwareSdkExtension extends Extension
         throw new \Exception(sprintf('Unsupported grant type: %s', $grantType));
     }
 
+    /**
+     * @param ITBShopwareSdkConfiguration $config
+     */
     private function configureAccessTokenFetcher(ContainerBuilder $container, array $config): void
     {
         if ($config['cache'] === false) {
@@ -84,12 +102,18 @@ final class ITBShopwareSdkExtension extends Extension
         $container->setAlias(AccessTokenFetcher::class, ServiceIds::CACHED_ACCESS_TOKEN_FETCHER)->setPublic(true);
     }
 
+    /**
+     * @param ITBShopwareSdkConfiguration $config
+     */
     private function configureShopwareVersion(ContainerBuilder $container, array $config): void
     {
         $entityDefinitionProviderDefinition = $container->getDefinition(ServiceIds::ENTITY_DEFINITION_PROVIDER);
         $entityDefinitionProviderDefinition->setArgument('$shopwareVersion', $config['shopware_version']);
     }
 
+    /**
+     * @param ITBShopwareSdkConfiguration $config
+     */
     private function configureShopUrl(ContainerBuilder $container, array $config): void
     {
         $simpleAccessTokenFetcherDefinition = $container->getDefinition(ServiceIds::SIMPLE_ACCESS_TOKEN_FETCHER);
