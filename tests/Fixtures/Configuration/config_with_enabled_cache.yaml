@@ -1,0 +1,7 @@
+shop_url: 'https://shopware.local'
+shopware_version: '6.5.5.0'
+credentials:
+  grant_type: 'client_credentials'
+  client_id: 'CLIENT_ID'
+  client_secret: 'CLIENT_SECRET'
+cache: true
