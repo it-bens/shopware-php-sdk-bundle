@@ -32,6 +32,11 @@ use Rector\TypeDeclaration\Rector\While_\WhileNullableToInstanceofRector;
 use Rector\ValueObject\PhpVersion;
 
 return RectorConfig::configure()
+    ->withPaths([
+        __DIR__ . '/src',
+        __DIR__ . '/tests',
+    ])
+
     ->withPhpVersion(PhpVersion::PHP_81)
 
     ->withSets([
