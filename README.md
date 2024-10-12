@@ -6,6 +6,7 @@
 ![Static Badge](https://img.shields.io/badge/Symfony-6.4-000000)
 ![Static Badge](https://img.shields.io/badge/Symfony-7.1-000000)
 ![Static Badge](https://img.shields.io/badge/Shopware-6.5-189eff)
+![Static Badge](https://img.shields.io/badge/Shopware-6.6-189eff)
 ![Packagist Version](https://img.shields.io/packagist/v/it-bens/shopware-sdk-bundle)
 [![codecov](https://codecov.io/gh/it-bens/shopware-php-sdk-bundle/branch/main/graph/badge.svg?token=pbKH9OWz5t)](https://codecov.io/gh/it-bens/shopware-php-sdk-bundle)
 
@@ -73,7 +74,7 @@ itb_shopware_sdk:
   cache: true
 ```
 
-The `shopware_version` key determines what entity schema is used for the native Shopware entities. Available versions are: `0.0.0.0`, `6.5.5.0`, `6.5.6.0`, `6.5.7.1`, `6.5.8.0`, `6.5.8.3`, `6.5.8.8` and `6.5.8.12`.
+The `shopware_version` key determines what entity schema is used for the native Shopware entities. Available versions are: `0.0.0.0`, `6.5.5.0`, `6.5.6.0`, `6.5.7.1`, `6.5.8.0`, `6.5.8.3`, `6.5.8.8`, `6.5.8.12`, `6.6.0.0`, `6.6.3.0`, `6.6.4.0`, `6.6.5.0` and `6.6.6.0`.
 Use the next lower version in comparison to your Shopware version. The listed versions were the lowest that introduced entity schema changes.
 `0.0.0.0` can be used to use the entity schemas and definitions from the [original SDK package](https://github.com/vienthuong/shopware-php-sdk).
 
