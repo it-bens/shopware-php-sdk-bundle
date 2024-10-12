@@ -7,6 +7,10 @@
 /vendor/
 ###< Composer ###
 
+###> symfony/dependency-injection ###
+/var/
+###< symfony/dependency-injection ###
+
 ###> symfony/phpunit-bridge ###
 .phpunit
 .phpunit.result.cache
