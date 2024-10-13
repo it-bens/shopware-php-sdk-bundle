@@ -127,6 +127,7 @@ The provider caches the repositories, so they don't have to be recreated every t
 Besides from the CRUD entity endpoints, Shopware provides endpoints that are either not entity related or perform special operations outside the CRUD scope.
 The currently available API services are:
 - [Admin Search API][admin-search-api-class-link] (read-equivalent to the Sync API)
+- [Document API][document-api-class-link] + [Document Generator API][document-generator-api-class-link]
 - [Info API][info-api-class-link]
 - [Mail Send API][mail-send-api-class-link]
 - [Media API][media-api-class-link]
@@ -142,6 +143,7 @@ They can be obtained directly via their interfaces:
 
 ```php
 use Vin\ShopwareSdk\Service\AdminSearchServiceInterface;
+use Vin\ShopwareSdk\Service\DocumentServiceInterface;
 use Vin\ShopwareSdk\Service\InfoServiceInterface;
 use Vin\ShopwareSdk\Service\MailSendServiceInterface;
 use Vin\ShopwareSdk\Service\MediaServiceInterface;
@@ -156,6 +158,7 @@ use Vin\ShopwareSdk\Service\UserServiceInterface;
 final class Services {
     public function __construct(
         private AdminSearchServiceInterface $adminSearchService,
+        private DocumentServiceInterface $documentService,
         private InfoServiceInterface $infoService,
         private MailSendServiceInterface $mailSendService,
         private MediaServiceInterface $mediaService,
@@ -255,6 +258,8 @@ That's why I appreciate every issue that is opened (preferably constructive) and
 You are all breathtaking!
 
 [admin-search-api-class-link]: https://github.com/shopware/administration/blob/trunk/Controller/AdminSearchController.php
+[document-api-class-link]: https://github.com/shopware/core/blob/trunk/Checkout/Document/Controller/DocumentController.php
+[document-generator-api-class-link]: https://github.com/shopware/core/blob/trunk/Checkout/Document/DocumentGeneratorController.php
 [info-api-class-link]: https://github.com/shopware/core/blob/trunk/Framework/Api/Controller/InfoController.php
 [mail-send-api-class-link]: https://github.com/shopware/core/blob/trunk/Content/MailTemplate/Api/MailActionController.php
 [media-api-class-link]: https://github.com/shopware/core/blob/trunk/Content/Media/Api/MediaUploadController.php

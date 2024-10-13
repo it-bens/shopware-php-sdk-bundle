@@ -11,6 +11,8 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\Yaml\Yaml;
 use Vin\ShopwareSdk\Service\AdminSearchService;
 use Vin\ShopwareSdk\Service\AdminSearchServiceInterface;
+use Vin\ShopwareSdk\Service\DocumentService;
+use Vin\ShopwareSdk\Service\DocumentServiceInterface;
 use Vin\ShopwareSdk\Service\InfoService;
 use Vin\ShopwareSdk\Service\InfoServiceInterface;
 use Vin\ShopwareSdk\Service\MailSendService;
@@ -55,6 +57,9 @@ final class ServicesTest extends TestCase
 
         $adminSearchService = $container->get(AdminSearchServiceInterface::class);
         $this->assertInstanceOf(AdminSearchService::class, $adminSearchService);
+
+        $documentService = $container->get(DocumentServiceInterface::class);
+        $this->assertInstanceOf(DocumentService::class, $documentService);
 
         $infoService = $container->get(InfoServiceInterface::class);
         $this->assertInstanceOf(InfoService::class, $infoService);

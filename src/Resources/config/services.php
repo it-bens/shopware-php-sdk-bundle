@@ -36,6 +36,8 @@ use Vin\ShopwareSdk\Service\AdminSearchService;
 use Vin\ShopwareSdk\Service\AdminSearchServiceInterface;
 use Vin\ShopwareSdk\Service\Api\ApiService;
 use Vin\ShopwareSdk\Service\Api\ApiServiceInterface;
+use Vin\ShopwareSdk\Service\DocumentService;
+use Vin\ShopwareSdk\Service\DocumentServiceInterface;
 use Vin\ShopwareSdk\Service\InfoService;
 use Vin\ShopwareSdk\Service\InfoServiceInterface;
 use Vin\ShopwareSdk\Service\MailSendService;
@@ -199,6 +201,14 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ])
         ->private();
     $services->alias(AdminSearchServiceInterface::class, ServiceIds::ADMIN_SEARCH_SERVICE)
+        ->public();
+
+    $services->set(ServiceIds::DOCUMENT_SERVICE, DocumentService::class)
+        ->args([
+            '$apiService' => service(ApiServiceInterface::class),
+        ])
+        ->private();
+    $services->alias(DocumentServiceInterface::class, ServiceIds::DOCUMENT_SERVICE)
         ->public();
 
     $services->set(ServiceIds::INFO_SERVICE, InfoService::class)

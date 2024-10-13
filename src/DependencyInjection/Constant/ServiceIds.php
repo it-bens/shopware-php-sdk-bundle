@@ -42,6 +42,8 @@ final class ServiceIds
 
     public const ADMIN_SEARCH_SERVICE = 'itb_shopware_sdk.service.admin_search_service';
 
+    public const DOCUMENT_SERVICE = 'itb_shopware_sdk.service.document_service';
+
     public const INFO_SERVICE = 'itb_shopware_sdk.service.info_service';
 
     public const MAIL_SEND_SERVICE = 'itb_shopware_sdk.service.mail_send_service';
