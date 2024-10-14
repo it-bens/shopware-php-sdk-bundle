@@ -30,15 +30,27 @@ final class ITBShopwareSdkExtension extends Extension
         return self::ALIAS;
     }
 
+    /**
+     * @param array<array<mixed>> $configs
+     * @return ITBShopwareSdkConfiguration
+     */
+    public function getConfig(array $configs, ContainerBuilder $container): array
+    {
+        /** @var ConfigurationInterface $configuration */
+        $configuration = $this->getConfiguration($configs, $container);
+        /** @var ITBShopwareSdkConfiguration $config */
+        $config = $this->processConfiguration($configuration, $configs);
+
+        return $config;
+    }
+
     public function load(array $configs, ContainerBuilder $container): void
     {
         $loader = new PhpFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('services.php');
 
-        /** @var ConfigurationInterface $configuration */
-        $configuration = $this->getConfiguration($configs, $container);
         /** @var ITBShopwareSdkConfiguration $config */
-        $config = $this->processConfiguration($configuration, $configs);
+        $config = $this->getConfig($configs, $container);
 
         $this->configureShopUrl($container, $config);
         $this->configureShopwareVersion($container, $config);

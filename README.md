@@ -97,20 +97,44 @@ The `cache` key determines if the obtained OAuth token should be cached. If set 
 
 ### CRUD Repository
 
-Shopware provides the usual CRUD operations for entities. The bundle provides repositories to execute this operations. Currently, the repositories cannot be autowired directly. They have to be obtained via the `RepositoryProviderInterface`.
+Shopware provides the usual CRUD operations for entities. The bundle provides repositories to execute this operations. 
+
+The repositories can injected directly via autowiring:
+
+```php
+use Vin\ShopwareSdk\Repository\RepositoryInterface;
+
+final class ProductService {
+    public function __construct(
+        private RepositoryInterface $productEntityRepository,
+        private RepositoryInterface $orderTransactionCaptureRefundPositionEntityRepository,
+    ) {
+    }
+    
+    // ...
+}
+```
+
+The dependency injection container will automatically will let the `RepositoryProvider` create the requested repositories based on the argument name.
+The argument name has to be the entity name in camel case with the suffix `EntityRepository`. The `RepositoryInterface` type hint is required.
+
+Alternatively, they can be obtained via the `RepositoryProviderInterface`.
 
 ```php
 use Vin\ShopwareSdk\Repository\RepositoryProviderInterface;
 use Vin\ShopwareSdk\Repository\RepositoryInterface;
 use Vin\ShopwareSdk\Data\Entity\v65812\Product\ProductDefinition;
+use Vin\ShopwareSdk\Data\Entity\v65812\OrderTransactionCaptureRefundPosition\OrderTransactionCaptureRefundPositionDefinition
 
 final class ProductService {
     private RepositoryInterface $productRepository;
+    private RepositoryInterface $orderTransactionCaptureRefundPositionRepository;
 
     public function __construct(
         RepositoryProviderInterface $repositoryProvider
     ) {
         $this->productRepository = $repositoryProvider->getRepository(ProductDefinition::ENTITY_NAME);
+        $this->orderTransactionCaptureRefundPositionRepository = $repositoryProvider->getRepository(OrderTransactionCaptureRefundPositionDefinition::ENTITY_NAME);
     }
     
     // ...
