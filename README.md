@@ -12,6 +12,8 @@
 
 This bundle wraps the [Shopware 6 SDK](https://github.com/it-bens/shopware-php-sdk) into a Symfony bundle.
 
+The bundle is tested with PHP Symfony 6.4 (PHP 8.1, PHP 8.2, PHP 8.3) and with Symfony 7.1 (PHP 8.2, PHP 8.3).
+
 ## Installation
 
 ### Applications that use Symfony Flex
