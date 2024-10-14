@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace ITB\ShopwareSdkBundle\Tests\Functional\Definition\DefinitionProviderTest;
+namespace ITB\ShopwareSdkBundle\Tests\Mock;
 
 use Vin\ShopwareSdk\Definition\DefinitionCollection;
 use Vin\ShopwareSdk\Definition\DefinitionCollectionPopulator;
 
-final class AdditionalDefinitionCollectionPopulator implements DefinitionCollectionPopulator
+final class AdditionalDefinitionCollectionPopulatorWithException implements DefinitionCollectionPopulator
 {
     public static function priority(): int
     {

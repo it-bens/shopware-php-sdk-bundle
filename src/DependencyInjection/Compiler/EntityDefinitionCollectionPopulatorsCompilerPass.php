@@ -6,10 +6,9 @@ namespace ITB\ShopwareSdkBundle\DependencyInjection\Compiler;
 
 use ITB\ShopwareSdkBundle\DependencyInjection\Constant\ServiceIds;
 use ITB\ShopwareSdkBundle\DependencyInjection\Constant\Tags;
-use Symfony\Component\DependencyInjection\Argument\IteratorArgument;
+use Symfony\Component\DependencyInjection\Argument\TaggedIteratorArgument;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Reference;
 use Vin\ShopwareSdk\Definition\DefinitionCollectionPopulator;
 
 final class EntityDefinitionCollectionPopulatorsCompilerPass implements CompilerPassInterface
@@ -28,15 +27,10 @@ final class EntityDefinitionCollectionPopulatorsCompilerPass implements Compiler
             }
         }
 
-        $entityDefinitionCollectionPopulatorReferences = [];
-        foreach ($container->findTaggedServiceIds(Tags::ENTITY_DEFINITION_COLLECTION_POPULATOR) as $id => $tags) {
-            $entityDefinitionCollectionPopulatorReferences[] = new Reference($id);
-        }
-
         $entityDefinitionProviderDefinition = $container->getDefinition(ServiceIds::ENTITY_DEFINITION_PROVIDER);
         $entityDefinitionProviderDefinition->setArgument(
             '$definitionCollectionPopulators',
-            new IteratorArgument($entityDefinitionCollectionPopulatorReferences)
+            new TaggedIteratorArgument(Tags::ENTITY_DEFINITION_COLLECTION_POPULATOR, defaultPriorityMethod: 'priority')
         );
     }
 }
