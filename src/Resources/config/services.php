@@ -3,7 +3,6 @@
 declare(strict_types=1);
 
 use ITB\ShopwareSdkBundle\DependencyInjection\Constant\ServiceIds;
-use ITB\ShopwareSdkBundle\DependencyInjection\Constant\Tags;
 use Psr\Clock\ClockInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface as PsrRequestFactoryInterface;
@@ -60,7 +59,6 @@ use Vin\ShopwareSdk\Service\UserService;
 use Vin\ShopwareSdk\Service\UserServiceInterface;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\abstract_arg;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
-use function Symfony\Component\DependencyInjection\Loader\Configurator\tagged_iterator;
 
 return static function (ContainerConfigurator $containerConfigurator): void {
     $services = $containerConfigurator->services();
@@ -120,7 +118,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
 
     $services->set(ServiceIds::ENTITY_DEFINITION_PROVIDER, DefinitionProvider::class)
         ->args([
-            '$definitionCollectionPopulators' => tagged_iterator(Tags::ENTITY_DEFINITION_COLLECTION_POPULATOR),
+            '$definitionCollectionPopulators' => abstract_arg('Entity definition collection populators via compiler pass'),
             '$shopwareVersion' => abstract_arg('Shopware version from config'),
         ])
         ->private();
