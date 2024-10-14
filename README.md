@@ -213,6 +213,11 @@ use Vin\ShopwareSdk\Definition\DefinitionCollection;
 use Vin\ShopwareSdk\Data\Entity\EntityDefinition;
 
 final class CustomDefinitionCollectionPopulator implements DefinitionCollectionPopulator {
+    public static function getEntityNames(string $shopwareVersion): array
+    {
+        return ['custom_entity'];
+    }
+    
     public static function priority(): int {
         return 0;
     }
