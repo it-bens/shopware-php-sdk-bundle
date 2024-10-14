@@ -9,6 +9,11 @@ use Vin\ShopwareSdk\Definition\DefinitionCollectionPopulator;
 
 final class AdditionalDefinitionCollectionPopulatorWithException implements DefinitionCollectionPopulator
 {
+    public static function getEntityNames(string $shopwareVersion): array
+    {
+        return [];
+    }
+
     public static function priority(): int
     {
         return 1;
