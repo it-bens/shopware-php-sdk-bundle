@@ -76,7 +76,7 @@ itb_shopware_sdk:
   cache: true
 ```
 
-The `shopware_version` key determines what entity schema is used for the native Shopware entities. Available versions are: `0.0.0.0`, `6.5.5.0`, `6.5.6.0`, `6.5.7.1`, `6.5.8.0`, `6.5.8.3`, `6.5.8.8`, `6.5.8.12`, `6.6.0.0`, `6.6.3.0`, `6.6.4.0`, `6.6.5.0` and `6.6.6.0`.
+The `shopware_version` key determines what entity schema is used for the native Shopware entities. Available versions are: `0.0.0.0`, `6.5.5.0`, `6.5.6.0`, `6.5.7.1`, `6.5.8.0`, `6.5.8.3`, `6.5.8.8`, `6.5.8.12`, `6.6.0.0`, `6.6.3.0`, `6.6.4.0`, `6.6.5.0`, `6.6.6.0` and `6.6.7.0`.
 Use the next lower version in comparison to your Shopware version. The listed versions were the lowest that introduced entity schema changes.
 `0.0.0.0` can be used to use the entity schemas and definitions from the [original SDK package](https://github.com/vienthuong/shopware-php-sdk).
 
