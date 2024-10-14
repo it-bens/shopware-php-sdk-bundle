@@ -35,7 +35,7 @@ final class Configuration implements ConfigurationInterface
                 ->enumNode('shopware_version')
                     ->info('The Shopware version of the shop. The used entity definitions are based on the given version. Use the next lowest defined version if your version is not listed.')
                     ->isRequired()
-                    ->values(['0.0.0.0', '6.5.5.0', '6.5.6.0', '6.5.7.1', '6.5.8.0', '6.5.8.3', '6.5.8.8', '6.5.8.12', '6.6.0.0', '6.6.3.0', '6.6.4.0', '6.6.5.0', '6.6.6.0'])
+                    ->values(['0.0.0.0', '6.5.5.0', '6.5.6.0', '6.5.7.1', '6.5.8.0', '6.5.8.3', '6.5.8.8', '6.5.8.12', '6.6.0.0', '6.6.3.0', '6.6.4.0', '6.6.5.0', '6.6.6.0', '6.6.7.0'])
                 ->end()
                 ->arrayNode('credentials')
                     ->info('The credentials are used with the given grant type to authenticate against the Shopware API.')
