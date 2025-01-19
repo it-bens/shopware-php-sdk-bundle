@@ -22,7 +22,7 @@ final class ITBShopwareSdkBundle extends Bundle
 
     public function getContainerExtension(): ITBShopwareSdkExtension
     {
-        if ($this->extension === null) {
+        if (! $this->extension instanceof ITBShopwareSdkExtension) {
             $this->extension = new ITBShopwareSdkExtension();
         }
 
