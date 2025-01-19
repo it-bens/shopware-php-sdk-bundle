@@ -1,8 +1,7 @@
 # Shopware 6 SDK Bundle for Symfony
 
-![Static Badge](https://img.shields.io/badge/PHP-8.1-8993be?logo=php)
-![Static Badge](https://img.shields.io/badge/PHP-8.2-8993be?logo=php)
 ![Static Badge](https://img.shields.io/badge/PHP-8.3-8993be?logo=php)
+![Static Badge](https://img.shields.io/badge/PHP-8.4-8993be?logo=php)
 ![Static Badge](https://img.shields.io/badge/Symfony-6.4-000000?logo=symfony)
 ![Static Badge](https://img.shields.io/badge/Symfony-7.1-000000?logo=symfony)
 ![Static Badge](https://img.shields.io/badge/Shopware-6.5-189eff?logo=shopware)
@@ -12,7 +11,7 @@
 
 This bundle wraps the [Shopware 6 SDK](https://github.com/it-bens/shopware-php-sdk) into a Symfony bundle.
 
-The bundle is tested with PHP Symfony 6.4 (PHP 8.1, PHP 8.2, PHP 8.3) and with Symfony 7.1 (PHP 8.2, PHP 8.3).
+The bundle is tested with PHP Symfony 6.4 (PHP 8.3, PHP 8.4) and with Symfony 7.1 (PHP 8.3, PHP 8.4).
 
 ## Installation
 
@@ -51,7 +50,7 @@ return [
 
 ## Requirements
 
-- PHP 8.1 or higher
+- PHP 8.3 or higher
 - Symfony 6.4 / 7.1 or higher
 - a PSR-7 implementation
 - a PSR-16 implementation (not required if the access token cache is disabled)
