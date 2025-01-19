@@ -144,7 +144,7 @@ jobs:
         run: php -v
 
       - name: Specify symfony version
-        uses: jacobtomlinson/gha-find-replace@863001a682308a0a2405e69e645cb0899b5ee64b # v3.0.4
+        uses: jacobtomlinson/gha-find-replace@f1069b438f125e5395d84d1c6fd3b559a7880cb5 # 3.0.5
         with:
           include: 'composer.json'
           find: '^6.4|^7.1'
