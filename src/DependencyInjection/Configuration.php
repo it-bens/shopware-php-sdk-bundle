@@ -40,6 +40,7 @@ final class Configuration implements ConfigurationInterface
                 ->arrayNode('credentials')
                     ->info('The credentials are used with the given grant type to authenticate against the Shopware API.')
                     ->isRequired()
+                    ->performNoDeepMerging()
                     ->children()
                         ->enumNode('grant_type')
                             ->isRequired()
