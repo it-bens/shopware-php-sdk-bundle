@@ -4,4 +4,4 @@ credentials:
   grant_type: 'client_credentials'
   client_id: 'CLIENT_ID'
   client_secret: 'CLIENT_SECRET'
-cache: true
+cache: cache.app

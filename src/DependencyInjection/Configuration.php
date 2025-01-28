@@ -16,7 +16,7 @@ use Vin\ShopwareSdk\Auth\GrantType;
  *     shop_url: string,
  *     shopware_version: string,
  *     credentials: ClientCredentialsConfiguration|UsernamePasswordConfiguration,
- *     cache: bool
+ *     cache: string|null
  * }
  */
 final class Configuration implements ConfigurationInterface
@@ -87,9 +87,9 @@ final class Configuration implements ConfigurationInterface
                         )
                     ->end()
                 ->end()
-                ->booleanNode('cache')
-                    ->info('Enable or disable the cache for the Shopware access token. A new token will be requested on every request if the cache is disabled.')
-                    ->defaultTrue()
+                ->scalarNode('cache')
+                    ->info('The service ID of the cache that should be used for the Shopware access token. A new token will be requested on every request if no service ID is given.')
+                    ->defaultNull()
                 ->end()
             ->end()
         ;
