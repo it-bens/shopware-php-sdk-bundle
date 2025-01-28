@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace ITB\ShopwareSdkBundle\DependencyInjection;
 
 use ITB\ShopwareSdkBundle\DependencyInjection\Constant\ServiceIds;
-use Psr\SimpleCache\CacheInterface;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -101,7 +100,7 @@ final class ITBShopwareSdkExtension extends Extension
      */
     private function configureAccessTokenFetcher(ContainerBuilder $container, array $config): void
     {
-        if ($config['cache'] === false) {
+        if ($config['cache'] === null) {
             $container->removeDefinition(ServiceIds::CACHED_ACCESS_TOKEN_FETCHER);
             $container->setAlias(AccessTokenFetcher::class, ServiceIds::SIMPLE_ACCESS_TOKEN_FETCHER)->setPublic(true);
 
@@ -109,7 +108,7 @@ final class ITBShopwareSdkExtension extends Extension
         }
 
         $cachedAccessTokenFetcherDefinition = $container->getDefinition(ServiceIds::CACHED_ACCESS_TOKEN_FETCHER);
-        $cachedAccessTokenFetcherDefinition->setArgument('$cache', new Reference(CacheInterface::class));
+        $cachedAccessTokenFetcherDefinition->setArgument('$cache', new Reference($config['cache']));
 
         $container->setAlias(AccessTokenFetcher::class, ServiceIds::CACHED_ACCESS_TOKEN_FETCHER)->setPublic(true);
     }

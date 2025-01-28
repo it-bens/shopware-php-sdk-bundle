@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace ITB\ShopwareSdkBundle\Tests\Compiler;
 
-use Psr\SimpleCache\CacheInterface;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\Psr16Cache;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -23,8 +22,6 @@ final class PsrSimpleCacheServicesCompilerPass implements CompilerPassInterface
         $psr16Cache->setArguments([
             '$pool' => new Reference('test_cache'),
         ]);
-        $container->setDefinition('cache', $psr16Cache);
-
-        $container->setAlias(CacheInterface::class, 'cache');
+        $container->setDefinition('cache.app', $psr16Cache);
     }
 }

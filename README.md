@@ -72,7 +72,7 @@ itb_shopware_sdk:
     grant_type: 'client_credentials'
     client_id: 'CLIENT_ID'
     client_secret: 'CLIENT_SECRET'
-  cache: true
+  cache: 'cache.app'
 ```
 
 The `shopware_version` key determines what entity schema is used for the native Shopware entities. Available versions are: `0.0.0.0`, `6.5.5.0`, `6.5.6.0`, `6.5.7.1`, `6.5.8.0`, `6.5.8.3`, `6.5.8.8`, `6.5.8.12`, `6.6.0.0`, `6.6.3.0`, `6.6.4.0`, `6.6.5.0`, `6.6.6.0` and `6.6.7.0`.
@@ -89,10 +89,10 @@ itb_shopware_sdk:
     grant_type: 'password'
     username: 'USERNAME'
     password: 'PASSWORD'
-  cache: true
+  cache: 'cache.app'
 ```
 
-The `cache` key determines if the obtained OAuth token should be cached. If set to `false` every request will request a new token from Shopware, first.
+The `cache` key determines if the obtained OAuth token should be cached. If set to `null` every request will request a new token from Shopware, before doing anything else.
 
 ## Usage
 
