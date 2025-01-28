@@ -92,6 +92,8 @@ itb_shopware_sdk:
   cache: 'cache.app'
 ```
 
+The `credentials` block will not be merged with other configuration files or environments to prevent `Environment variables ... are never used.` errors when different grant types are used in different environments. The block will be overwritten according to the hirarchy defined by Symfony: https://symfony.com/doc/current/configuration.html#configuration-environments.
+
 The `cache` key determines if the obtained OAuth token should be cached. If set to `null` every request will request a new token from Shopware, before doing anything else.
 
 ## Usage
