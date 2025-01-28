@@ -72,7 +72,7 @@ itb_shopware_sdk:
     grant_type: 'client_credentials'
     client_id: 'CLIENT_ID'
     client_secret: 'CLIENT_SECRET'
-  cache: 'cache.app'
+  cache: 'simple_cache.app'
 ```
 
 ```php
@@ -87,7 +87,7 @@ return static function (ItbShopwareSdkConfig $itbShopwareSdk): void {
         ->grantType('client_credentials')
         ->clientId('CLIENT_ID')
         ->clientSecret('CLIENT_SECRET');
-    $itbShopwareSdk->cache('cache.app');
+    $itbShopwareSdk->cache('simple_cache.app');
 };
 ```
 
@@ -105,7 +105,7 @@ itb_shopware_sdk:
     grant_type: 'password'
     username: 'USERNAME'
     password: 'PASSWORD'
-  cache: 'cache.app'
+  cache: 'simple_cache.app'
 ```
 
 ```php
@@ -120,13 +120,41 @@ return static function (ItbShopwareSdkConfig $itbShopwareSdk): void {
         ->grantType('password')
         ->clientId('USERNAME')
         ->clientSecret('PASSWORD');
-    $itbShopwareSdk->cache('cache.app');
+    $itbShopwareSdk->cache('simple_cache.app');
 };
 ```
 
 The `credentials` block will not be merged with other configuration files or environments to prevent `Environment variables ... are never used.` errors when different grant types are used in different environments. The block will be overwritten according to the hirarchy defined by Symfony: https://symfony.com/doc/current/configuration.html#configuration-environments.
 
-The `cache` key determines if the obtained OAuth token should be cached. If set to `null` every request will request a new token from Shopware, before doing anything else.
+### Cache
+
+The `cache` key in the configuration determines if the obtained OAuth token should be cached. If set to `null` every request will request a new token from Shopware, before doing anything else.
+
+In a typical Symfony project, there are already several cache pools available. However, these implement Symfonys own cache contracts/interfaces. This Shopware SDK requires a PSR-16 implementation to make it compatible with other frameworks and framework-less applications.
+
+A PSR-16 implementation can be easily defined as a service if the `symfony/cache` component is installed:
+
+```yaml
+services:
+    simple_cache.app:
+        class: Symfony\Component\Cache\Psr16Cache
+        arguments:
+        - '@cache.app'
+```
+
+```php
+<?php
+
+namespace Symfony\Component\DependencyInjection\Loader\Configurator;
+
+use Symfony\Component\Cache\Psr16Cache;
+
+return function (ContainerConfigurator $containerConfigurator) {
+    $services = $containerConfigurator->services();
+    $services->set('simple_cache.app', Psr16Cache::class)
+        ->arg('$pool', service('cache.app'));
+};
+```
 
 ## Usage
 
