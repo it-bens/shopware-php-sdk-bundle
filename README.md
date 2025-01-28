@@ -75,6 +75,22 @@ itb_shopware_sdk:
   cache: 'cache.app'
 ```
 
+```php
+<?php
+
+use Symfony\Config\ItbShopwareSdkConfig;
+
+return static function (ItbShopwareSdkConfig $itbShopwareSdk): void {
+    $itbShopwareSdk->shopUrl('https://shopware.local');
+    $itbShopwareSdk->shopwareVersion('6.5.5.0');
+    $itbShopwareSdk->credentials()
+        ->grantType('client_credentials')
+        ->clientId('CLIENT_ID')
+        ->clientSecret('CLIENT_SECRET');
+    $itbShopwareSdk->cache('cache.app');
+};
+```
+
 The `shopware_version` key determines what entity schema is used for the native Shopware entities. Available versions are: `0.0.0.0`, `6.5.5.0`, `6.5.6.0`, `6.5.7.1`, `6.5.8.0`, `6.5.8.3`, `6.5.8.8`, `6.5.8.12`, `6.6.0.0`, `6.6.3.0`, `6.6.4.0`, `6.6.5.0`, `6.6.6.0` and `6.6.7.0`.
 Use the next lower version in comparison to your Shopware version. The listed versions were the lowest that introduced entity schema changes.
 `0.0.0.0` can be used to use the entity schemas and definitions from the [original SDK package](https://github.com/vienthuong/shopware-php-sdk).
@@ -90,6 +106,22 @@ itb_shopware_sdk:
     username: 'USERNAME'
     password: 'PASSWORD'
   cache: 'cache.app'
+```
+
+```php
+<?php
+
+use Symfony\Config\ItbShopwareSdkConfig;
+
+return static function (ItbShopwareSdkConfig $itbShopwareSdk): void {
+    $itbShopwareSdk->shopUrl('https://shopware.local');
+    $itbShopwareSdk->shopwareVersion('6.5.5.0');
+    $itbShopwareSdk->credentials()
+        ->grantType('password')
+        ->clientId('USERNAME')
+        ->clientSecret('PASSWORD');
+    $itbShopwareSdk->cache('cache.app');
+};
 ```
 
 The `credentials` block will not be merged with other configuration files or environments to prevent `Environment variables ... are never used.` errors when different grant types are used in different environments. The block will be overwritten according to the hirarchy defined by Symfony: https://symfony.com/doc/current/configuration.html#configuration-environments.
