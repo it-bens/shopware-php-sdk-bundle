@@ -271,10 +271,12 @@ New entities can be added to Shopware via Plugins. The SDK package and this bund
 This requires an implementation of the `DefinitionCollectionPopulator` interface.
 
 ```php
+use ITB\ShopwareSdkBundle\Attribute\AsEntityDefinitionCollectionPopulator;
 use Vin\ShopwareSdk\Definition\DefinitionCollectionPopulator;
 use Vin\ShopwareSdk\Definition\DefinitionCollection;
 use Vin\ShopwareSdk\Data\Entity\EntityDefinition;
 
+#[AsEntityDefinitionCollectionPopulator]
 final class CustomDefinitionCollectionPopulator implements DefinitionCollectionPopulator {
     public static function getEntityNames(string $shopwareVersion): array
     {
@@ -293,7 +295,9 @@ final class CustomDefinitionCollectionPopulator implements DefinitionCollectionP
 }
 ```
 
-If the service is autowired a compiler pass in this bundle will detect the interface usage, tag the service an add it to the `DefinitionCollectionProvider`.
+If the service has the `AsEntityDefinitionCollectionPopulator` attribute and is marked for autoconfiguration (this will likely happen in a typical Symfony project), the service is automatically tagged as a `DefinitionCollectionPopulator`.
+
+After that a compiler pass in this bundle will detect the tag and add the service to the `DefinitionCollectionProvider`.
 Of cause the service can be tagged manually as well:
 
 ```php

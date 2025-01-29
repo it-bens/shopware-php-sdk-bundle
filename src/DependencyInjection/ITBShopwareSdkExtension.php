@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace ITB\ShopwareSdkBundle\DependencyInjection;
 
+use ITB\ShopwareSdkBundle\Attribute\AsEntityDefinitionCollectionPopulator;
 use ITB\ShopwareSdkBundle\DependencyInjection\Constant\ServiceIds;
+use ITB\ShopwareSdkBundle\DependencyInjection\Constant\Tags;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
@@ -14,6 +17,7 @@ use Symfony\Component\DependencyInjection\Reference;
 use Vin\ShopwareSdk\Auth\AccessTokenFetcher;
 use Vin\ShopwareSdk\Auth\AccessTokenProvider;
 use Vin\ShopwareSdk\Auth\GrantType;
+use Vin\ShopwareSdk\Definition\DefinitionCollectionPopulator;
 
 /**
  * @phpstan-import-type ITBShopwareSdkConfiguration from Configuration
@@ -55,6 +59,7 @@ final class ITBShopwareSdkExtension extends Extension
         $this->configureShopwareVersion($container, $config);
         $this->configureAccessTokenFetcher($container, $config);
         $this->configureAccessTokenProvider($container, $config);
+        $this->configureEntityDefinitionCollectionPopulators($container);
     }
 
     /**
@@ -132,5 +137,27 @@ final class ITBShopwareSdkExtension extends Extension
 
         $contextBuilderFactoryDefinition = $container->getDefinition(ServiceIds::CONTEXT_BUILDER_FACTORY);
         $contextBuilderFactoryDefinition->setArgument('$shopUrl', $config['shop_url']);
+    }
+
+    private function configureEntityDefinitionCollectionPopulators(ContainerBuilder $container): void
+    {
+        $container->registerAttributeForAutoconfiguration(
+            AsEntityDefinitionCollectionPopulator::class,
+            static function (
+                ChildDefinition $definition,
+                AsEntityDefinitionCollectionPopulator $attribute,
+                \ReflectionClass $reflector
+            ): void {
+                if (! $reflector->implementsInterface(DefinitionCollectionPopulator::class)) {
+                    throw new \RuntimeException(sprintf(
+                        'The class %s must implement %s to be used as an entity definition collection populator. The `AsEntityDefinitionCollectionPopulator` attribute cannot be used here.',
+                        $reflector->getName(),
+                        DefinitionCollectionPopulator::class
+                    ));
+                }
+
+                $definition->addTag(Tags::ENTITY_DEFINITION_COLLECTION_POPULATOR);
+            }
+        );
     }
 }

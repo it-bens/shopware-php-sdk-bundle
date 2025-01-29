@@ -24,6 +24,7 @@ final class EntityRepositoryTest extends TestCase
         $config = Yaml::parseFile(__DIR__ . '/../../Fixtures/Configuration/config_with_enabled_cache.yaml');
 
         $additionalDefinitionCollectionPopulatorDefinition = new Definition(AdditionalDefinitionCollectionPopulator::class);
+        $additionalDefinitionCollectionPopulatorDefinition->setAutoconfigured(true);
         $additionalDefinitionCollectionPopulatorDefinition->setPublic(false);
 
         yield [

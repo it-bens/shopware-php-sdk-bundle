@@ -7,12 +7,14 @@ namespace ITB\ShopwareSdkBundle\Tests\Functional\Definition;
 use ITB\ShopwareSdkBundle\DependencyInjection\Configuration;
 use ITB\ShopwareSdkBundle\Tests\ITBShopwareSdkBundleKernel;
 use ITB\ShopwareSdkBundle\Tests\Mock\AdditionalDefinitionCollectionPopulator;
+use ITB\ShopwareSdkBundle\Tests\Mock\AdditionalDefinitionCollectionPopulatorNotImplementingInterface;
 use ITB\ShopwareSdkBundle\Tests\Mock\AdditionalDefinitionCollectionPopulatorWithException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\Yaml\Yaml;
 use Vin\ShopwareSdk\Definition\DefinitionCollection;
+use Vin\ShopwareSdk\Definition\DefinitionCollectionPopulator;
 use Vin\ShopwareSdk\Definition\DefinitionProvider;
 use Vin\ShopwareSdk\Definition\DefinitionProviderInterface;
 
@@ -26,6 +28,7 @@ final class DefinitionProviderTest extends TestCase
         $config = Yaml::parseFile(__DIR__ . '/../../Fixtures/Configuration/config_with_enabled_cache.yaml');
 
         $additionalDefinitionCollectionPopulatorDefinition = new Definition(AdditionalDefinitionCollectionPopulatorWithException::class);
+        $additionalDefinitionCollectionPopulatorDefinition->setAutoconfigured(true);
         $additionalDefinitionCollectionPopulatorDefinition->setPublic(false);
 
         yield [
@@ -39,11 +42,28 @@ final class DefinitionProviderTest extends TestCase
         $config = Yaml::parseFile(__DIR__ . '/../../Fixtures/Configuration/config_with_enabled_cache.yaml');
 
         $additionalDefinitionCollectionPopulatorDefinition = new Definition(AdditionalDefinitionCollectionPopulator::class);
+        $additionalDefinitionCollectionPopulatorDefinition->setAutoconfigured(true);
         $additionalDefinitionCollectionPopulatorDefinition->setPublic(false);
 
         yield [
             $config, [
                 AdditionalDefinitionCollectionPopulator::class => $additionalDefinitionCollectionPopulatorDefinition,
+            ]];
+    }
+
+    public static function withAdditionalDefinitionCollectionPopulatorNotImplementingInterfaceProvider(): \Generator
+    {
+        $config = Yaml::parseFile(__DIR__ . '/../../Fixtures/Configuration/config_with_enabled_cache.yaml');
+
+        $additionalDefinitionCollectionPopulatorDefinition = new Definition(
+            AdditionalDefinitionCollectionPopulatorNotImplementingInterface::class
+        );
+        $additionalDefinitionCollectionPopulatorDefinition->setAutoconfigured(true);
+        $additionalDefinitionCollectionPopulatorDefinition->setPublic(false);
+
+        yield [
+            $config, [
+                AdditionalDefinitionCollectionPopulatorNotImplementingInterface::class => $additionalDefinitionCollectionPopulatorDefinition,
             ]];
     }
 
@@ -93,5 +113,26 @@ final class DefinitionProviderTest extends TestCase
         $lastEntityName = $entityNames[count($entityNames) - 1];
 
         $this->assertSame('new_entity', $lastEntityName);
+    }
+
+    /**
+     * @param ITBShopwareSdkConfiguration $config
+     * @param array<string, Definition> $dependencyInjectionDefinitions
+     */
+    #[DataProvider('withAdditionalDefinitionCollectionPopulatorNotImplementingInterfaceProvider')]
+    public function testWithAdditionalDefinitionCollectionPopulatorNotImplementingInterface(
+        array $config,
+        array $dependencyInjectionDefinitions
+    ): void {
+        $kernel = new ITBShopwareSdkBundleKernel('test', true, $config, $dependencyInjectionDefinitions);
+
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage(sprintf(
+            'The class %s must implement %s to be used as an entity definition collection populator. The `AsEntityDefinitionCollectionPopulator` attribute cannot be used here.',
+            AdditionalDefinitionCollectionPopulatorNotImplementingInterface::class,
+            DefinitionCollectionPopulator::class
+        ));
+
+        $kernel->boot();
     }
 }

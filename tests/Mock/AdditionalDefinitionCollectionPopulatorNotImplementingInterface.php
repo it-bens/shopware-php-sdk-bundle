@@ -6,12 +6,14 @@ namespace ITB\ShopwareSdkBundle\Tests\Mock;
 
 use ITB\ShopwareSdkBundle\Attribute\AsEntityDefinitionCollectionPopulator;
 use Vin\ShopwareSdk\Definition\DefinitionCollection;
-use Vin\ShopwareSdk\Definition\DefinitionCollectionPopulator;
 
 #[AsEntityDefinitionCollectionPopulator]
-final class AdditionalDefinitionCollectionPopulator implements DefinitionCollectionPopulator
+final class AdditionalDefinitionCollectionPopulatorNotImplementingInterface
 {
-    public static function getEntityNames(string $shopwareVersion): array
+    /**
+     * @return string[]
+     */
+    public static function getEntityNames(): array
     {
         return ['new_entity'];
     }
@@ -21,7 +23,7 @@ final class AdditionalDefinitionCollectionPopulator implements DefinitionCollect
         return 1;
     }
 
-    public function populateDefinitionCollection(DefinitionCollection $definitionCollection, string $shopwareVersion): void
+    public function populateDefinitionCollection(DefinitionCollection $definitionCollection): void
     {
         $definitionCollection->set(new AdditionalDefinition());
     }
