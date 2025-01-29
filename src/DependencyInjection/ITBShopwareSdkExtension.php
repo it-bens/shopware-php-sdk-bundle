@@ -17,6 +17,7 @@ use Symfony\Component\DependencyInjection\Reference;
 use Vin\ShopwareSdk\Auth\AccessTokenFetcher;
 use Vin\ShopwareSdk\Auth\AccessTokenProvider;
 use Vin\ShopwareSdk\Auth\GrantType;
+use Vin\ShopwareSdk\Definition\DefinitionCollectionPopulator;
 
 /**
  * @phpstan-import-type ITBShopwareSdkConfiguration from Configuration
@@ -142,7 +143,19 @@ final class ITBShopwareSdkExtension extends Extension
     {
         $container->registerAttributeForAutoconfiguration(
             AsEntityDefinitionCollectionPopulator::class,
-            static function (ChildDefinition $definition): void {
+            static function (
+                ChildDefinition $definition,
+                AsEntityDefinitionCollectionPopulator $attribute,
+                \ReflectionClass $reflector
+            ): void {
+                if (! $reflector->implementsInterface(DefinitionCollectionPopulator::class)) {
+                    throw new \RuntimeException(sprintf(
+                        'The class %s must implement %s to be used as an entity definition collection populator. The `AsEntityDefinitionCollectionPopulator` attribute cannot be used here.',
+                        $reflector->getName(),
+                        DefinitionCollectionPopulator::class
+                    ));
+                }
+
                 $definition->addTag(Tags::ENTITY_DEFINITION_COLLECTION_POPULATOR);
             }
         );
