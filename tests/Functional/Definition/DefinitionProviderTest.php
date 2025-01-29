@@ -26,6 +26,7 @@ final class DefinitionProviderTest extends TestCase
         $config = Yaml::parseFile(__DIR__ . '/../../Fixtures/Configuration/config_with_enabled_cache.yaml');
 
         $additionalDefinitionCollectionPopulatorDefinition = new Definition(AdditionalDefinitionCollectionPopulatorWithException::class);
+        $additionalDefinitionCollectionPopulatorDefinition->setAutoconfigured(true);
         $additionalDefinitionCollectionPopulatorDefinition->setPublic(false);
 
         yield [
@@ -39,6 +40,7 @@ final class DefinitionProviderTest extends TestCase
         $config = Yaml::parseFile(__DIR__ . '/../../Fixtures/Configuration/config_with_enabled_cache.yaml');
 
         $additionalDefinitionCollectionPopulatorDefinition = new Definition(AdditionalDefinitionCollectionPopulator::class);
+        $additionalDefinitionCollectionPopulatorDefinition->setAutoconfigured(true);
         $additionalDefinitionCollectionPopulatorDefinition->setPublic(false);
 
         yield [

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use ITB\ShopwareSdkBundle\DependencyInjection\Constant\ServiceIds;
+use ITB\ShopwareSdkBundle\DependencyInjection\Constant\Tags;
 use Psr\Clock\ClockInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface as PsrRequestFactoryInterface;
@@ -114,6 +115,7 @@ return static function (ContainerConfigurator $containerConfigurator): void {
         ->public();
 
     $services->set(ServiceIds::ENTITY_DEFINITION_COLLECTION_POPULATOR_WITH_SDK_MAPPING, WithSdkMapping::class)
+        ->tag(Tags::ENTITY_DEFINITION_COLLECTION_POPULATOR)
         ->private();
 
     $services->set(ServiceIds::ENTITY_DEFINITION_PROVIDER, DefinitionProvider::class)
