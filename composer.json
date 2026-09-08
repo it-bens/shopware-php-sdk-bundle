@@ -31,7 +31,7 @@
         "symfony/http-client": "^6.4|^7.1",
         "symfony/yaml": "^6.4|^7.1",
         "symplify/coding-standard": "^12.0",
-        "symplify/easy-coding-standard": "^12.1"
+        "symplify/easy-coding-standard": "^13.0"
     },
     "config": {
         "optimize-autoloader": true,
